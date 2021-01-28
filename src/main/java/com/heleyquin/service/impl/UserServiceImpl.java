@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUser(int id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()) {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException(String.valueOf(id));
         }
         return objectMapper.convertValue(optionalUser.get(), UserDTO.class);
     }
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO updateUser(int id, UserDTO userDTO) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()) {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException(String.valueOf(id));
         }
         User user = objectMapper.readerForUpdating(optionalUser.get()).readValue(objectMapper.writeValueAsString(userDTO));
         return objectMapper.convertValue(userRepository.save(user), UserDTO.class);
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(int id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()) {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException(String.valueOf(id));
         }
         userRepository.deleteById(id);
     }

@@ -1,10 +1,9 @@
 package com.heleyquin.dto;
 
 import com.google.common.base.CaseFormat;
+import lombok.Getter;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class Test {
@@ -27,9 +26,28 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        System.out.println("ha");
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("ab"));
+        students.add(new Student("a"));
+        students.add(new Student("b"));
+        Collections.sort(students);
+        Collections.sort(students, (s1,s2)-> s2.getName().compareTo(s1.getName()));
+        students.stream().map(Student::getName).forEach(System.out::println);
     }
 
+}
+@Getter
+class Student implements Comparable{
+    private String name;
+
+    Student(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }
 
 
